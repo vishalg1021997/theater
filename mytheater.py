@@ -49,8 +49,8 @@ class Theater: #CLASS THEATER IS CREATED
 
     def price(self):#TO CALCULATE THE PRICE
         if self.row * self.col <= 60:              #IF THE SEATS ARE LESS THAN 60 THE PRICE OF EACH SEAT
-            for i in range(1, self.row + 1):       #WILL BE 10
-                for j in range(1, self.col + 1):
+            for i in range(0, self.row + 1):       #WILL BE 10
+                for j in range(0, self.col + 1):
                     a = {}    #THE PRICE WILL BE STORE IN DICTIONARY EACH SEAT WILL HAVE ITS OWN PRICE
                     a[i, j] = 10
                     self.pricing.update(a) #THE PRICE AND VALUE WILL BE ADDED IN PRICING DICTIONARY TO USE LATER
@@ -58,13 +58,13 @@ class Theater: #CLASS THEATER IS CREATED
                                         #AND THE OTHER HALF PRICE WILL BE 10
             c = self.row // 2           #TO GET THE HALF VALUE OF ROW
             b = self.col // 2           #TO GET THE HALF VALUE OF COLUMN
-            for i in range(1, self.row + 1):  #LOOP IS CREATED TO ITERATE TO THE ROW AND NESTED LOOP FOR COLUMN
-                for j in range(1, self.col + 1):#SO WE CAN GET SEAT NUMBER OF EACH ROW AND COLUMN
+            for i in range(0, self.row + 1):  #LOOP IS CREATED TO ITERATE TO THE ROW AND NESTED LOOP FOR COLUMN
+                for j in range(0, self.col + 1):#SO WE CAN GET SEAT NUMBER OF EACH ROW AND COLUMN
                     a = {}     #EMPTY DICTIONAR TO STORE THE PRICE OF EACH UNIQUE SEAT
                     a[i, j] = 8             #SEAT ALONG WITH PRICE IS STORE
                     self.pricing.update(a) # IN PRICING HERE THE PRICE OF ALL SEAT IS 9
             for i in range((c + 1), self.row + 1):#TO CHANGE THE PRICE OF FRONT HALF SEAT TO 10 IN THE AUDI
-                for j in range(1, self.col + 1):
+                for j in range(0, self.col + 1):
                     a = {}
                     a[i, j] = 10            #SEAT ALONG WITH PRICE FOR FRONT HALF IS STORE
                     self.pricing.update(a)  #FRONT HALF SEAT PRICE WILL BE UPDATED TO 10
@@ -94,14 +94,14 @@ class Theater: #CLASS THEATER IS CREATED
     def user_info(self, row, col):#TO GET THE BOOKED TICKET USER INFO
         self.getrow = row  #GET THE ROW AND COLUMN FROM THE USER WHICH IS THE SEAT NUMBER OF THE USER AND IT WILL
         self.getcol = col #SEARCH THE DETAILS IN THE details DICT AND THE DETAILS OF THE CUST WILL BE DISPLAYED
-        if (int(self.getrow),int(self.getcol)) not in self.details:
+        if (int(self.getrow) - 1,int(self.getcol) - 1) not in self.details:
             print(color.RED + color.BOLD + "\nPlease Enter The Correct Booked Seat Number\n" + color.END)
         else:
-            print(color.BOLD + "Name: ", self.details[int(self.getrow), int(self.getcol)][0])
-            print("Gender: ", self.details[int(self.getrow), int(self.getcol)][1])
-            print("Age: ", self.details[int(self.getrow), int(self.getcol)][2])
-            print("Phone Number: ", self.details[int(self.getrow), int(self.getcol)][3])
-            print("Ticket Price: ", self.details[int(self.getrow), int(self.getcol)][4], "\n " + color.END)
+            print(color.BOLD + "Name: ", self.details[int(self.getrow) - 1, int(self.getcol) - 1][0])
+            print("Gender: ", self.details[int(self.getrow) - 1, int(self.getcol) - 1][1])
+            print("Age: ", self.details[int(self.getrow) - 1, int(self.getcol) - 1][2])
+            print("Phone Number: ", self.details[int(self.getrow) - 1, int(self.getcol) - 1][3])
+            print("Ticket Price: ", self.details[int(self.getrow) - 1, int(self.getcol) - 1][4], "\n " + color.END)
 
     def buyticket(self, row, col): #TO BOOK THE SEAT
         self.buyrow = row #TO TAKE THE SEAT NUMBER FROM THE USER WHERE HE WILL LIKE TO BOOK
@@ -109,7 +109,7 @@ class Theater: #CLASS THEATER IS CREATED
         if (int(self.buyrow),int(self.buycol)) not in self.pricing:
             print(color.RED + color.BOLD + "Please Enter The Correct Seat Number" + color.END)
         else:
-            if self.matrix[int(self.buyrow)][int(self.buycol)] == "B": #IF THE SEAT IS ALREAYD BOOKED
+            if self.matrix[int(self.buyrow) - 1][int(self.buycol) - 1] == "B": #IF THE SEAT IS ALREAYD BOOKED
                 print("Seat Already Booked Book Another Seat" + color.END)#IT WILL DSPLAY ALREADY BOOKED
             else: #IF THE SEAT IS VACANT IT WILL DISPLAY THE PRICE OF TICKET AND ASK FOR CONFIRMATION
                 print("Price Of The Ticket: ", self.pricing[(int(self.buyrow), int(self.buycol))])
@@ -119,9 +119,9 @@ class Theater: #CLASS THEATER IS CREATED
                     customer_name, customer_gender, customer_age, customer_phone = input("Enter Your Name Gender Age Phone Number: \n").split()
                     if int(customer_age) > 17 and len(customer_phone) == 10:
                         #THE VALUE IS GETTING STORED IN GIVEN SEAT NUMBER BY USER WITH HIS DETAILS IN a DICT
-                        a[int(self.buyrow), int(self.buycol)] = list((customer_name, customer_gender, int(customer_age),int(customer_phone),self.pricing[(int(self.buyrow), int(self.buycol))]))
+                        a[int(self.buyrow) - 1, int(self.buycol) - 1] = list((customer_name, customer_gender, int(customer_age),int(customer_phone),self.pricing[(int(self.buyrow), int(self.buycol))]))
                         self.details.update(a)#VALUE OF A WILL BE UPDATED IN details DICT
-                        self.matrix[int(self.buyrow)][int(self.buycol)] = "B" #THE SEAT NUMBER VALUE IN THE LIST WILL BE CHANGE TO B
+                        self.matrix[int(self.buyrow) - 1][int(self.buycol) - 1] = "B" #THE SEAT NUMBER VALUE IN THE LIST WILL BE CHANGE TO B
                         print(color.BOLD + color.PURPLE + "Your Booking Is Done" + color.END) #SHOWING AS BOOKED
                     else:
                         print(color.RED + "\nPeople Between Age 18 and 60 Are Allowed and Check If The Phone Number Enter Is COrrect \n" + color.END)
